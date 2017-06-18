@@ -10,11 +10,11 @@ class NarrativeController
 
     function getAction($req)
     {
+        header("Content-type: application/json");
         // $n = array_shift($req);
         // if($n)
         if(key_exists("n", $req))
         {
-            header("Content-type: application/json");
             $nid = array_shift($req);
             try {
                 $narrative = $this->storage->get($nid);
@@ -26,7 +26,6 @@ class NarrativeController
         }
         else
         {
-            header("Content-type: application/json");
             $list = $this->storage->getall();
             echo json_encode($list);
         }

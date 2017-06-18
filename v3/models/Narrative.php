@@ -11,7 +11,7 @@ class Narrative
     // function __construct($id, $name, $intro, $pic, $items)
     function build($id, $name, $intro, $pic, $items)
     {
-        $this->id = $id;
+        $this->id = +$id;
         $this->name = Array("da" => $name[0],
                             "en" => $name[1]);
         $this->intro = Array("da" => $intro[0],
@@ -20,12 +20,15 @@ class Narrative
                            "credit" => $pic[1],
                            "caption" => Array("da" => $pic[2],
                                               "en" => $pic[3]));
-        $this->items = explode(',', $items);
+        $this->items = array_map('intval', explode(',', $items));
     }
 
     // Erm what would be a better way to use the constructor
     // actually...? Here I am using a separate build(), after
-    // preprocessing a array to an associative array
+    // preprocessing a array to an associative array. The current
+    // storage solution, Google Sheets over the API, server sheet rows
+    // as integer-indexed JSON objects, without column names. The
+    // first item contains would contain the column names.
     function fromJson($j) {
         // $this->__construct(j[0], Array(j[2], j[1]), Array(j[4], j[3]), Array(j[5], j[6], j[8], j[7]), explode(',', j[9]));
         //        dump($j);
