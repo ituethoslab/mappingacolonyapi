@@ -10,10 +10,7 @@ $datasourcedescription = '../datasource.ini';
 
 $req = $_REQUEST;
 
-// $controllers = array("NarrativeController"); // Not necessarily necessary check
-
 $controllername = ucfirst(array_shift($req)) . "Controller";
-//if(key_exists($controllername, $controllers))
 {
     header("Access-Control-Allow-Origin: *");
     
