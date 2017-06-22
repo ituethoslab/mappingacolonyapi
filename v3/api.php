@@ -8,12 +8,15 @@ require_once('models/NarrativeStorage.php');
 
 $datasourcedescription = '../datasource.ini';
 
-$req = $_REQUEST;
+$actions = array("NarrativeController" =>
+                 array("getAction", "listidsAction", "dumpstorageAction"));
+
+$req = filter_input_array(INPUT_GET, $_REQUEST);
 
 $controllername = ucfirst(array_shift($req)) . "Controller";
 {
     header("Access-Control-Allow-Origin: *");
-    
+
     $controller = new $controllername($datasourcedescription);
     $action = array_shift($req) . "Action";
 
