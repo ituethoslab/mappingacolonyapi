@@ -6,6 +6,8 @@ require_once('controllers/NarrativeController.php');
 require_once('models/Narrative.php');
 require_once('models/NarrativeStorage.php');
 
+require_once('controllers/EuropeanaController.php');
+
 $datasourcedescription = '../datasource.ini';
 
 $actions = array("NarrativeController" =>
