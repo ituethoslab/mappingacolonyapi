@@ -10,9 +10,6 @@ require_once('controllers/EuropeanaController.php');
 
 $datasourcedescription = '../datasource.ini';
 
-$actions = array("NarrativeController" =>
-                 array("getAction", "listidsAction", "dumpstorageAction"));
-
 $req = filter_input_array(INPUT_GET, $_REQUEST);
 
 $controllername = ucfirst(array_shift($req)) . "Controller";
