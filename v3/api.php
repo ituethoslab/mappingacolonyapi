@@ -2,6 +2,9 @@
 // ini_set('display_errors', 'On');
 // error_reporting(E_ALL);
 
+require_once('controllers/MapDataController.php');
+require_once('models/MapDataStorage.php');
+
 require_once('controllers/NarrativeController.php');
 require_once('models/Narrative.php');
 require_once('models/NarrativeStorage.php');
