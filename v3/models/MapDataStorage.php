@@ -14,8 +14,9 @@ class MapDataStorage
             $growno = $n + 2; // yeah hardcoded...
             $grows = $this->googlecall('A' . $growno . ':' . 'Z' . $growno);
             $gjson = json_decode($grows, true);
-            $mapdata = new MapData;
-            $mapdata->fromJson($gjson["values"][0]); // always take the first one
+            // $mapdata = new MapData;
+            // $mapdata->fromJson($gjson["values"][0]); // always take the first one
+            $mapdata = $gjson["values"][0];
             return json_encode($mapdata);
         } else {
             throw new Exception("No such item $n");
