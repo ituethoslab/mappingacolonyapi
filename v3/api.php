@@ -13,6 +13,7 @@ require_once('models/Narrative.php');
 require_once('models/NarrativeStorage.php');
 
 require_once('controllers/EuropeanaController.php');
+require_once('models/EuropeanaConnection.php');
 
 $datasourcedescription = '../datasource.ini';
 
