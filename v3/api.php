@@ -5,6 +5,9 @@
 require_once('controllers/MapDataController.php');
 require_once('models/MapDataStorage.php');
 
+require_once('controllers/PhotoGalleryController.php');
+require_once('models/PhotoGalleryStorage.php');
+
 require_once('controllers/NarrativeController.php');
 require_once('models/Narrative.php');
 require_once('models/NarrativeStorage.php');
