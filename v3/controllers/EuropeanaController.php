@@ -5,18 +5,21 @@ class EuropeanaController
 
     function __construct($inifile)
     {
-        $ini = parse_ini_file($inifile, true);
-        $this->europeana = $ini["europeana"]["endpoint"] . "?wskey=" . $ini["europeana"]["apikey"];
+        $this->europeana = new EuropeanaConnection($inifile);
     }
 
     function nearbyAction($req) {
         // expects to find arguments 'lat' and 'long' in the request
-        $size = 0.025;
         $lat = $req["lat"];
         $long = $req["long"];
-        $bb = "pl_wgs84_pos_lat:[" . ($lat - $size) . "+TO+" . ($lat + $size) . "]+AND+pl_wgs84_pos_long:[" . ($long - $size) . "+TO+" . ($long + $size) . "]";
-        $europeanaRequest = $this->europeana . "&query=" . $bb;
-        $response = file_get_contents($europeanaRequest);
+        $response = $this->europeana->getNearby($lat, $long);
+        header("Content-type: application/json");
+        print $response;
+    }
+
+    function subjectAction($req) {
+        $subject = str_replace(' ', '+', array_shift($req));
+        $response = $this->europeana->getSubject($subject);
         header("Content-type: application/json");
         print $response;
     }
