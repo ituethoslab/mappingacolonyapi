@@ -1,14 +1,52 @@
 <?php
+/**
+ * A narrative, for parsing stuff hosted on Google Sheets
+ */
+
+/**
+ * A Narrative object
+ */ 
 class Narrative
 {
+    /** Identifier */
     public $id;
+
+    /** Name, as an array (dictionary) of language versions */
     public $name;
+
+    /** Introduction, as an array (dictionary) of language versions */
     public $intro;
+
+    /** Cover picture. As an array (dictionary) of language versions, URL and source=credit */
     public $pic;
+
+    /** Array of map data items, an ordered list of ids */
     public $items;
 
+    /**
+     * A contructor
+     *
+     * Yeah, should accept parameters for initializing the object,
+     * currently relies on the build() method for populating.
+     */
     function __construct() {}
-    // function __construct($id, $name, $intro, $pic, $items)
+
+    /**
+     * Populate the object from an array
+     *
+     * Erm what would be a better way to use the constructor
+     * actually...? Here I am using a separate build(), after
+     * preprocessing a array to an associative array. The current
+     * storage solution, Google Sheets over the API, server sheet rows
+     * as integer-indexed JSON objects, without column names. The
+     * first item contains would contain the column names.
+     *
+     * @param integer $id Identifier
+     * @param array $name Tuple of (danish, english) language name
+     * @param array $intro Tuple of (danish, english) introduction text
+     * @param array $pic Triple of URL, link and tuple (danish, english) caption
+     * @param string $items A comma-separated string of items
+     */
     function build($id, $name, $intro, $pic, $items)
     {
         $this->id = +$id;
@@ -23,12 +61,15 @@ class Narrative
         $this->items = array_map('intval', explode(',', $items));
     }
 
-    // Erm what would be a better way to use the constructor
-    // actually...? Here I am using a separate build(), after
-    // preprocessing a array to an associative array. The current
-    // storage solution, Google Sheets over the API, server sheet rows
-    // as integer-indexed JSON objects, without column names. The
-    // first item contains would contain the column names.
+    /**
+     * Populate the object properties from an JSON object
+     *
+     * Fragile, as this relies on the schema (read: Google Sheet
+     * columns) not changing, like, ever. Also no data validity
+     * checking
+     *
+     * @param array $j 
+     */
     function fromJson($j) {
         // $this->__construct(j[0], Array(j[2], j[1]), Array(j[4], j[3]), Array(j[5], j[6], j[8], j[7]), explode(',', j[9]));
         //        dump($j);

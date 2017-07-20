@@ -1,13 +1,39 @@
 <?php
+/**
+ * A data storage model for narratives
+ */
+
+/**
+ * Narrative storage, which is a Google Sheet document
+ *
+ * Yeah abstraction would be nice, also using the actual Google API
+ * library for PHP, but it isn't available for our production
+ * environment.
+ */
 class NarrativeStorage
 {
+    /**
+     * Configuration
+     */
     private $ini;
 
+    /**
+     * Constructor
+     *
+     * @param string $inifile Inifile name for configuration, secrets etc
+     */
     function __construct($inifile)
     {
         $this->ini = parse_ini_file($inifile, true);
     }
 
+    /**
+     * Get an individual narrative
+     *
+     * @param int $n Identifier for a narrative
+     *
+     * @return JSON The requested narrative as a JSON object
+     */
     function get($n)
     {
         if(key_exists($n, $this->listids())) {
@@ -20,8 +46,13 @@ class NarrativeStorage
         } else {
             throw new Exception("No such item $n");
         }
-   }
+    }
 
+    /**
+     * Get all narratives
+     *
+     * @return array All the narratives as an array
+     */
     function getall()
     {
         $narratives = array();
@@ -35,6 +66,11 @@ class NarrativeStorage
         return $narratives;
     }
 
+    /** 
+     * List all the narrative identifiers
+     *
+     * @return array An array of all the identifiers
+     */
     function listids()
     {
         // return $this->googlecall('A2:A1000');
@@ -47,6 +83,15 @@ class NarrativeStorage
         return $l;
     }
 
+    /**
+     * Dump the whole storage as JSON
+     *
+     * For clientside parsing, or whatever
+     *
+     * @param boolean true|false Whether to skip the header row
+     *
+     * @return JSON The whole contents of the narrative storage, as JSON
+     */
     function dumpstorage($skipheader=true)
     {
         if($skipheader)
@@ -57,6 +102,13 @@ class NarrativeStorage
         }
     }
 
+    /**
+     * Call the storage solution, which is a Google Sheet
+     *
+     * @param string $range What data to retrieve, in A1 notation
+     *
+     * @return string Whatever data Google Sheet returned. Typing is crappy here
+     */
     private function googlecall($range) {
         if($range) {
             $range = '!' . $range;

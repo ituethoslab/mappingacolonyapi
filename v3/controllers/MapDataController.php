@@ -1,13 +1,37 @@
 <?php
+/**
+ * A controller for map data.
+ */
+
+/**
+ * An MVCish controller for map data.
+ */
 class MapDataController
 {
+    /**
+     * Data storage
+     */
     private $storage;
 
+    /**
+     * Constructor
+     *
+     * @param string $inifile An inifile name with credentials etc.
+     */
     function __construct($inifile)
     {
         $this->storage = new MapDataStorage($inifile);
     }
 
+    /**
+     * Action for getting one map data item
+     *
+     * If not "n" if provided, gets all the items
+     * 
+     * @param HttpRequest $req An HTTP request, with argument "n" in it
+     *
+     * @return The item as a JSON object
+     */
     function getAction($req)
     {
         header("Content-type: application/json");
@@ -31,12 +55,25 @@ class MapDataController
         }
     }
 
+    /**
+     * Action for listing all map data item ids
+     *
+     * @return List of all map data identifiers, as a list in JSON
+     */
     function listidsAction()
     {
         header("Content-Type: application/json");
         echo json_encode($this->storage->listids());
     }
 
+    /**
+     * Action for dumping the whole storage contents for map data.
+     *
+     * By default as CSV, or as JSON if requested.
+     *
+     * @param HttpRequest $req A HTTP request with optional "format" for JSON or CSV
+     * @return All of the map data, in the requested format
+     */
     function dumpstorageAction($req)
     {
         if(key_exists("format", $req))
