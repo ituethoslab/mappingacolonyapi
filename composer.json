@@ -1,0 +1,16 @@
+{
+	"name": "mace/mappingacolonyapi",
+	"description": "Mapping A Colony middleware API",
+	"authors": [
+		{
+			"name": "Mace Ojala",
+			"email": "maco@itu.dk",
+			"homepage": "https://twitter.com/xmacex",
+			"role": "Developer"
+		}
+	],
+	"license": "GPL-3.0",
+	"require-dev": {
+		"phpdocumentor/phpdocumentor": "2.*"
+	}
+}
