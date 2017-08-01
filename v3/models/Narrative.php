@@ -11,6 +11,9 @@ class Narrative
     /** Identifier */
     public $id;
 
+    /** Published */
+    public $published;
+
     /** Name, as an array (dictionary) of language versions */
     public $name;
 
@@ -42,14 +45,16 @@ class Narrative
      * first item contains would contain the column names.
      *
      * @param integer $id Identifier
+     * @param boolean $published Is this published?
      * @param array $name Tuple of (danish, english) language name
      * @param array $intro Tuple of (danish, english) introduction text
      * @param array $pic Triple of URL, link and tuple (danish, english) caption
      * @param string $items A comma-separated string of items
      */
-    function build($id, $name, $intro, $pic, $items)
+    function build($id, $published, $name, $intro, $pic, $items)
     {
         $this->id = +$id;
+        $this->published = strtolower($published) == "yes";
         $this->name = Array("da" => $name[0],
                             "en" => $name[1]);
         $this->intro = Array("da" => $intro[0],
@@ -74,10 +79,11 @@ class Narrative
         // $this->__construct(j[0], Array(j[2], j[1]), Array(j[4], j[3]), Array(j[5], j[6], j[8], j[7]), explode(',', j[9]));
         //        dump($j);
         $this->build($j[0],
-                     Array($j[2], $j[1]),
-                     Array($j[4], $j[3]),
-                     Array($j[5], $j[6], $j[8], $j[7]),
-                     $j[9]);
+                     $j[1],
+                     Array($j[3], $j[2]),
+                     Array($j[5], $j[4]),
+                     Array($j[6], $j[7], $j[9], $j[8]),
+                     $j[10]);
     }
 }
 ?>
